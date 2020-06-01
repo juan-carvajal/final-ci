@@ -20,6 +20,8 @@ import com.computacion.repository.TsscTopicRepository;
 import com.computacion.service.TsscGameService;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import reactor.core.publisher.Mono;
+
 @Controller
 public class TsscGameController {
 
@@ -112,7 +114,7 @@ public class TsscGameController {
 			WebClient.create("http://localhost:8080").post()
 	        .uri("/api/games/add/")
 	        .accept(MediaType.APPLICATION_JSON).bodyValue(game)
-	        .retrieve();
+	        .retrieve().bodyToMono(TsscGame.class).block();
 			
 //			if (game.getTsscTopic() != null) {
 //				this.gameService.createGame(game, game.getTsscTopic().getId());

@@ -1,4 +1,4 @@
-package rest;
+package com.computacion.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class TsscGameRestController {
 		return gameRepo.findAll();
 	}
 	
-	@GetMapping("api/games/{id}")
+	@GetMapping("/api/games/{id}")
 	public TsscGame getGameById(@PathVariable long id) {
 		try {
 			return this.gameService.getGame(id);
@@ -47,7 +47,7 @@ public class TsscGameRestController {
 	}
 	
 	
-	@PatchMapping("api/games/edit")
+	@PatchMapping("/api/games/edit")
 	public TsscGame EditGame(@RequestBody TsscGame game) throws TsscTopicNotFoundException, TsscGameException, TsscGameNotFoundException {
 		if (game.getTsscTopic() != null) {
 			return this.gameService.updateGame(game, game.getTsscTopic().getId());
@@ -59,7 +59,7 @@ public class TsscGameRestController {
 	}
 	
 	
-	@PostMapping("api/games/add")
+	@PostMapping("/api/games/add")
 	public TsscGame AddGame(@RequestBody TsscGame game) throws TsscTopicNotFoundException, TsscGameException {
 		if (game.getTsscTopic() != null) {
 			return this.gameService.createGame(game, game.getTsscTopic().getId());
@@ -68,7 +68,7 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@DeleteMapping("api/games/del")
+	@DeleteMapping("/api/games/del")
 	public void DeleteGame(@PathVariable long id) {
 		this.gameRepo.deleteById(id);
 	}

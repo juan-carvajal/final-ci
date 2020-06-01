@@ -1,4 +1,4 @@
-package rest;
+package com.computacion.rest;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
