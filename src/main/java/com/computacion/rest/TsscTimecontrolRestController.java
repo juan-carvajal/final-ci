@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.computacion.model.TsscTimecontrol;
 import com.computacion.model.exceptions.TsscGameNotFoundException;
@@ -15,6 +16,7 @@ import com.computacion.model.exceptions.TsscTopicNotFoundException;
 import com.computacion.repository.TsscTimecontrolRepository;
 import com.computacion.service.TsscTimecontrolService;
 
+@RestController
 public class TsscTimecontrolRestController {
 	
 	@Autowired
