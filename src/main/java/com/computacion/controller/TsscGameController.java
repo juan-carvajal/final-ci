@@ -60,10 +60,11 @@ public class TsscGameController {
 			WebClient.create("http://localhost:8080").delete()
 			        .uri("/api/games/del/{id}",id)
 			        .accept(MediaType.APPLICATION_JSON)
-			        .retrieve();
+			        .retrieve().bodyToMono(Void.class).block();
 			//this.gameRepo.deleteById(id);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return "redirect:/games";
 	}
@@ -81,10 +82,10 @@ public class TsscGameController {
 				return "juegos/edit";
 			}
 			
-			WebClient.create("http://localhost:8080").patch()
+			TsscGame eGame=WebClient.create("http://localhost:8080").patch()
 	        .uri("/api/games/edit/")
 	        .accept(MediaType.APPLICATION_JSON).bodyValue(game)
-	        .retrieve();
+	        .retrieve().bodyToMono(TsscGame.class).block();
 //			if (game.getTsscTopic() != null) {
 //				this.gameService.updateGame(game, game.getTsscTopic().getId());
 //			} else {
@@ -93,6 +94,7 @@ public class TsscGameController {
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return "redirect:/games";
 	}
@@ -126,11 +128,7 @@ public class TsscGameController {
 	        .accept(MediaType.APPLICATION_JSON).bodyValue(game)
 	        .retrieve().bodyToMono(TsscGame.class).block();
 			
-//			if (game.getTsscTopic() != null) {
-//				this.gameService.createGame(game, game.getTsscTopic().getId());
-//			} else {
-//				this.gameService.createGame(game);
-//			}
+
 		}
 
 		return "redirect:/games";

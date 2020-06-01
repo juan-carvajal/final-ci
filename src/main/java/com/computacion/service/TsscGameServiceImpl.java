@@ -59,7 +59,7 @@ public class TsscGameServiceImpl implements TsscGameService{
 			if(game.getNGroups()<=0 || game.getNSprints()<=0) {
 				throw new TsscGameException(game);
 			}else {
-				return this.gameDao.save(game);
+				return this.gameDao.update(game);
 			}
 			
 		}else {
