@@ -1,5 +1,8 @@
 package com.computacion.service;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.computacion.model.TsscAdmin;
 
 public interface TsscAdminService {

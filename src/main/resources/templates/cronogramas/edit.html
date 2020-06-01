@@ -7,7 +7,9 @@
   <!--<![endif]-->
   <head>
     <style type="text/css">
-
+      i {
+        margin-right: 5px;
+      }
     </style>
 
     <link
@@ -34,55 +36,70 @@
 
     <div class="text-center">
       <h1 class="display-2">Simulacion de Scrum - Universidad ICESI</h1>
-      <h1 class="display-4">Escoja una opcion por favor:</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              <a href="/games"
-                ><span><i class="fas fa-gamepad"></i></span> Gestion de Juegos</a
-              >
-            </th>
-          </tr>
+      <h1 class="display-4">Editar Cronograma</h1>
+      <div class="container">
+        <form action="#" th:action="@{/timecontrols/edit/{id}(id=${timecontrol.id})}" th:object="${timecontrol}"
+				method="post">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Campo</th>
+                  <th scope="col">Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+      
+                <tr>
+                  <td>Nombre</td>
+                  <td>
+                    <input th:field="*{name}" type="text" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Estado</td>
+                  <td>
+                    <input th:field="*{state}" type="text" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Intervalo</td>
+                  <td>
+                    <input th:field="*{timeInterval}" type="number" />
+                  </td>
+                </tr>
+               
+<tr>
+							<td>Juego</td>
+							<td><select th:field="*{tsscGame}" required>
 
-          <tr>
-            <th scope="row">
-              <a href="/topics"
-                ><span><i class="fas fa-align-justify"></i></span> Gestion de Temas</a
-              >
-            </th>
-          </tr>
+									<option th:each="game : ${games}" th:value="${game.id}"
+										class="form-control" th:text="${game.name}"></option>
 
-          <tr>
-            <th scope="row">
-              <a href="/stories"
-                ><span><i class="far fa-sticky-note"></i></span> Gestion de Historias</a
-              >
-            </th>
-          </tr>
-          
-           <tr>
-            <th scope="row">
-              <a href="/timecontrols"
-                ><span><i class="far fa-sticky-note"></i></span> Gestion de Cronogramas</a
-              >
-            </th>
-          </tr>
 
-          <tr>
-            <th scope="row">
-              <a href="/logout"
-                ><span><i class="fas fa-sign-out-alt"></i></span> Logout</a
-              >
-            </th>
-          </tr>
-        </tbody>
-      </table>
+
+							</select></td>
+						</tr>
+						
+						<tr>
+							<td>Tema</td>
+							<td><select th:field="*{tsscTopic}" required>
+
+									<option th:each="topic : ${topics}" th:value="${topic.id}"
+										class="form-control" th:text="${topic.name}"></option>
+
+
+
+							</select></td>
+						</tr>
+      
+              </tbody>
+            </table>
+      
+      
+            <button type="submit" class="btn btn-primary extend">Editar</button>
+          </form>
+      </div>
+
     </div>
 
     <script

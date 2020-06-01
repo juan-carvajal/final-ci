@@ -1,6 +1,8 @@
 package com.computacion.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.computacion.dao.GameDao;
 import com.computacion.model.TsscGame;
@@ -13,6 +15,7 @@ import com.computacion.repository.TsscGameRepository;
 
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TsscGameServiceImpl implements TsscGameService{
 	
 	

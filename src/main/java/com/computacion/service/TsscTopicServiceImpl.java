@@ -1,6 +1,8 @@
 package com.computacion.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.computacion.dao.TopicDao;
 import com.computacion.model.TsscTopic;
@@ -9,6 +11,7 @@ import com.computacion.model.exceptions.TsscTopicNotFoundException;
 import com.computacion.repository.TsscTopicRepository;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TsscTopicServiceImpl implements TsscTopicService {
 	
 	private TopicDao topicDao;
