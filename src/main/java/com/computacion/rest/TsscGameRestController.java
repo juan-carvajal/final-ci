@@ -49,6 +49,7 @@ public class TsscGameRestController {
 	
 	@PatchMapping("api/games/edit")
 	public TsscGame EditGame(@RequestBody TsscGame game) throws TsscTopicNotFoundException, TsscGameException, TsscGameNotFoundException {
+		System.out.println(game);
 		if (game.getTsscTopic() != null) {
 			return this.gameService.updateGame(game, game.getTsscTopic().getId());
 
@@ -68,7 +69,7 @@ public class TsscGameRestController {
 		}
 	}
 	
-	@DeleteMapping("api/games/del")
+	@DeleteMapping("api/games/del/{id}")
 	public void DeleteGame(@PathVariable long id) {
 		this.gameRepo.deleteById(id);
 	}

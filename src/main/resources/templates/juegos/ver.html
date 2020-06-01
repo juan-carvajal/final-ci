@@ -35,8 +35,8 @@
 	<div class="text-center">
 		<h1 class="display-2">Simulacion de Scrum - Universidad ICESI</h1>
 		<h1 class="display-4">Gestion de Juegos</h1>
-		<h2 th:if="${games.empty}">No hay juegos!</h2>
-		<div th:if="${not games.empty}">
+		<h2 th:if="${#lists.isEmpty(games)}">No hay juegos!</h2>
+		<div th:if="${not #lists.isEmpty(games)}">
 
 			<table class="table">
 				<thead>

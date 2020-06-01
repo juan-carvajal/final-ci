@@ -1,5 +1,7 @@
 package com.computacion.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.reactive.function.client.WebClient;
+
 
 import com.computacion.model.TsscGame;
 import com.computacion.model.exceptions.TsscGameException;
@@ -25,18 +28,22 @@ import reactor.core.publisher.Mono;
 @Controller
 public class TsscGameController {
 
-	@Autowired
-	public TsscGameService gameService;
 
-	@Autowired
-	public TsscGameRepository gameRepo;
 
 	@Autowired
 	public TsscTopicRepository topicRepo;
 
 	@GetMapping("/games")
 	public String viewGames(Model model) {
-		model.addAttribute("games", gameRepo.findAll());
+		
+		
+		var flux=WebClient.create("http://localhost:8080").get()
+        .uri("/api/games")
+        .accept(MediaType.APPLICATION_JSON)
+        .retrieve().bodyToFlux(TsscGame.class);;
+
+		
+		model.addAttribute("games",flux.toIterable() );
 		return "juegos/ver";
 	}
 
@@ -51,7 +58,7 @@ public class TsscGameController {
 	public String deleteGame(@PathVariable long id) {
 		try {
 			WebClient.create("http://localhost:8080").delete()
-			        .uri("/api/games/del/"+id)
+			        .uri("/api/games/del/{id}",id)
 			        .accept(MediaType.APPLICATION_JSON)
 			        .retrieve();
 			//this.gameRepo.deleteById(id);
@@ -93,7 +100,10 @@ public class TsscGameController {
 	@GetMapping("/games/edit/{id}")
 	public String editGame(@PathVariable long id, Model model) {
 		try {
-			TsscGame game = gameService.getGame(id);
+			TsscGame game = WebClient.create("http://localhost:8080").get()
+			        .uri("/api/games/{id}",id)
+			        .accept(MediaType.APPLICATION_JSON)
+			        .retrieve().bodyToMono(TsscGame.class).block();
 			model.addAttribute("game", game);
 			model.addAttribute("topics", topicRepo.findAll());
 			return "/juegos/edit";
