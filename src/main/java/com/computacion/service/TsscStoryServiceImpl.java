@@ -3,6 +3,8 @@ package com.computacion.service;
 import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.computacion.dao.StoryDao;
 import com.computacion.model.TsscGame;
@@ -14,6 +16,7 @@ import com.computacion.model.exceptions.TsscStoryNotFound;
 import com.computacion.repository.TsscStoryRepository;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TsscStoryServiceImpl implements TsscStoryService {
 
 	private StoryDao storyDao;

@@ -2,12 +2,15 @@ package com.computacion.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.computacion.dao.AdminDao;
 import com.computacion.model.TsscAdmin;
 import com.computacion.repository.TsscAdminRepository;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TsscAdminServiceImpl implements TsscAdminService{
 	
 	@Autowired
