@@ -36,8 +36,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		
+//		httpSecurity.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+		
+//		httpSecurity
+//		.authorizeRequests()
+//		.antMatchers("/").permitAll()
+//		.antMatchers(HttpMethod.GET, "/api/topics/**").hasAnyRole("SA")
+//		.antMatchers(HttpMethod.PUT, "/api/topics/**").hasAnyRole("SA")
+//		.antMatchers(HttpMethod.PATCH, "/api/topics/**").hasAnyRole("SA")
+//		.antMatchers(HttpMethod.DELETE, "/api/topics/**").hasAnyRole("SA")
+//		.antMatchers(HttpMethod.GET, "/api/games/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PUT, "/api/games/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PATCH, "/api/games/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.DELETE, "/api/games/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.GET, "/api/timecontrols/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PUT, "/api/timecontrols/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PATCH, "/api/timecontrols/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.DELETE, "/api/timecontrols/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.GET, "/api/stories/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PUT, "/api/stories/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.PATCH, "/api/stories/**").hasAnyRole("SA","A")
+//		.antMatchers(HttpMethod.DELETE, "/api/stories/**").hasAnyRole("SA","A")
+//		.antMatchers("/topics/add").hasAnyRole("SA")
+//		.antMatchers("/topics/edit/**").hasAnyRole("SA")
+//		.anyRequest().authenticated()
+//		.and().csrf().disable()
+//		.formLogin().loginPage("/login").permitAll().and().logout()
+//		.invalidateHttpSession(true).clearAuthentication(true)
+//		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
+//		.permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+//		
 
-		httpSecurity.authorizeRequests().antMatchers("/topics/add").hasAnyRole("SA").antMatchers("/topics/edit/**").hasAnyRole("SA").anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
+		httpSecurity.authorizeRequests().antMatchers("/topics/add").hasAnyRole("SA").antMatchers("/topics/edit/**").hasAnyRole("SA").antMatchers("/api/**").permitAll().anyRequest().authenticated()
+		.and().csrf().disable().formLogin().loginPage("/login").permitAll().and().logout()
 				.invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
 				.permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
