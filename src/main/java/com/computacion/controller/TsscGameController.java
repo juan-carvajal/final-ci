@@ -1,6 +1,7 @@
 package com.computacion.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.computacion.model.TsscGame;
 import com.computacion.model.exceptions.TsscGameException;
@@ -16,6 +18,7 @@ import com.computacion.model.exceptions.TsscTopicNotFoundException;
 import com.computacion.repository.TsscGameRepository;
 import com.computacion.repository.TsscTopicRepository;
 import com.computacion.service.TsscGameService;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @Controller
 public class TsscGameController {
@@ -45,7 +48,11 @@ public class TsscGameController {
 	@GetMapping("/games/del/{id}")
 	public String deleteGame(@PathVariable long id) {
 		try {
-			this.gameRepo.deleteById(id);
+			WebClient.create("http://localhost:8080").delete()
+			        .uri("/api/games/del/"+id)
+			        .accept(MediaType.APPLICATION_JSON)
+			        .retrieve();
+			//this.gameRepo.deleteById(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -64,11 +71,16 @@ public class TsscGameController {
 				model.addAttribute("topics", topicRepo.findAll());
 				return "juegos/edit";
 			}
-			if (game.getTsscTopic() != null) {
-				this.gameService.updateGame(game, game.getTsscTopic().getId());
-			} else {
-				this.gameService.updateGame(game);
-			}
+			
+			WebClient.create("http://localhost:8080").patch()
+	        .uri("/api/games/edit/")
+	        .accept(MediaType.APPLICATION_JSON).bodyValue(game)
+	        .retrieve();
+//			if (game.getTsscTopic() != null) {
+//				this.gameService.updateGame(game, game.getTsscTopic().getId());
+//			} else {
+//				this.gameService.updateGame(game);
+//			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -96,11 +108,17 @@ public class TsscGameController {
 			model.addAttribute("topics", topicRepo.findAll());
 			return "/juegos/add";
 		} else {
-			if (game.getTsscTopic() != null) {
-				this.gameService.createGame(game, game.getTsscTopic().getId());
-			} else {
-				this.gameService.createGame(game);
-			}
+			
+			WebClient.create("http://localhost:8080").post()
+	        .uri("/api/games/add/")
+	        .accept(MediaType.APPLICATION_JSON).bodyValue(game)
+	        .retrieve();
+			
+//			if (game.getTsscTopic() != null) {
+//				this.gameService.createGame(game, game.getTsscTopic().getId());
+//			} else {
+//				this.gameService.createGame(game);
+//			}
 		}
 
 		return "redirect:/games";
