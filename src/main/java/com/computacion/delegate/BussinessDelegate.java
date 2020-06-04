@@ -1,5 +1,7 @@
 package com.computacion.delegate;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -191,6 +193,22 @@ public Iterable<TsscStory> getAllStories(){
 	
 	public void setUrl(String url) {
 		this.url=url;
+	}
+	
+	
+	public Iterable<TsscTopic> getTopicsByDate(LocalDate date){
+		 return wc.get()
+	        .uri("api/topics/byDate/{date}",date)
+	        .accept(MediaType.APPLICATION_JSON)
+	        .retrieve().bodyToFlux(TsscTopic.class).toIterable();
+	}
+	
+	
+	public Iterable<TsscGame> gamesExtraQuery(LocalDate date){
+		 return wc.get()
+	        .uri("api/games/byDate/{date}",date)
+	        .accept(MediaType.APPLICATION_JSON)
+	        .retrieve().bodyToFlux(TsscGame.class).toIterable();
 	}
 
 
