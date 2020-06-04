@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.computacion.delegate.BussinessDelegate;
 import com.computacion.model.TsscStory;
 import com.computacion.model.TsscTopic;
 import com.computacion.model.exceptions.TsscGameNotFoundException;
@@ -27,21 +28,13 @@ import com.computacion.service.TsscTopicService;
 
 @Controller
 public class TsscTopicController {
-
 	
 	@Autowired
-	public TsscTopicRepository topicRepo;
-
-	@Autowired
-	public TsscTopicService topicService;
-
-
-	
-
+	public BussinessDelegate delegate;
 
 	@GetMapping("/topics")
 	public String viewTopics(Model model) {
-		model.addAttribute("topics", topicRepo.findAll());
+		model.addAttribute("topics", delegate.getAllTopics());
 		return "temas/ver";
 	}
 
@@ -54,7 +47,7 @@ public class TsscTopicController {
 	@GetMapping("/topics/del/{id}")
 	public String deleteTopic(@PathVariable long id) {
 		try {
-			this.topicRepo.deleteById(id);
+			delegate.deleteTopic(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -72,7 +65,7 @@ public class TsscTopicController {
 
 				return "temas/edit";
 			}else {
-				this.topicService.updateTopic(topic);
+				delegate.editTopic(topic);
 			}
 
 
@@ -85,7 +78,7 @@ public class TsscTopicController {
 	@GetMapping("/topics/edit/{id}")
 	public String editTopic(@PathVariable long id, Model model) {
 		try {
-			TsscTopic topic = topicService.getTopic(id);
+			TsscTopic topic = delegate.getTopic(id);
 			model.addAttribute("topic", topic);
 			return "/temas/edit";
 		} catch (Exception e) {
@@ -104,7 +97,7 @@ public class TsscTopicController {
 			}
 			return "/temas/add";
 		} else {
-			this.topicService.createTopic(topic);
+			delegate.addTopic(topic);
 			return "redirect:/topics";
 		}
 

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.computacion.model.TsscGame;
+import com.computacion.model.TsscTopic;
 
 @Component
 public class BussinessDelegate {
@@ -53,12 +54,40 @@ public class BussinessDelegate {
 	
 	//Topics
 	
-	public Iterable<TsscGame> getAllTopics(){
+	public Iterable<TsscTopic> getAllTopics(){
 		
 		return WebClient.create("http://localhost:8080").get()
 		        .uri("/api/topics")
 		        .accept(MediaType.APPLICATION_JSON)
-		        .retrieve().bodyToFlux(TsscGame.class).toIterable();
+		        .retrieve().bodyToFlux(TsscTopic.class).toIterable();
+	}
+	
+	public void deleteTopic(long id) {
+		WebClient.create("http://localhost:8080").delete()
+        .uri("/api/topics/del/{id}",id)
+        .accept(MediaType.APPLICATION_JSON)
+        .retrieve().bodyToMono(Void.class).block();
+	}
+	
+	public void editTopic(TsscTopic topic) {
+		WebClient.create("http://localhost:8080").patch()
+        .uri("/api/topics/edit/")
+        .accept(MediaType.APPLICATION_JSON).bodyValue(topic)
+        .retrieve().bodyToMono(TsscTopic.class).block();
+	}
+	
+	public TsscTopic getTopic(long id) {
+		return WebClient.create("http://localhost:8080").get()
+		        .uri("/api/topics/{id}",id)
+		        .accept(MediaType.APPLICATION_JSON)
+		        .retrieve().bodyToMono(TsscTopic.class).block();
+	}
+	
+	public void addTopic(TsscTopic topic) {
+		WebClient.create("http://localhost:8080").post()
+        .uri("/api/topics/add/")
+        .accept(MediaType.APPLICATION_JSON).bodyValue(topic)
+        .retrieve().bodyToMono(TsscTopic.class).block();
 	}
 	//Timecontrols
 	//Stories
