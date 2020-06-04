@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<style type="text/css">
+.fixed {
+	width: 10rem;
+}
+</style>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous" />
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title></title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="" />
+</head>
+<body>
+	<!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+	<div class="text-center">
+		<h1 class="display-2">Simulacion de Scrum - Universidad ICESI</h1>
+		<h1 class="display-4">Gestion de Juegos</h1>
+		<h2 th:if="${#lists.isEmpty(games)}">No hay juegos!</h2>
+		<div th:if="${not #lists.isEmpty(games)}">
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col">Fecha</th>
+						<th scope="col">Hora</th>
+						<th scope="col">Grupos</th>
+						<th scope="col">Sprints</th>
+						<th scope="col">Contraseña admin</th>
+						<th scope="col">Contraseña usuario</th>
+						<th scope="col">Contraseña observador</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Borrar</th>
+						<th scope="col">Historias</th>
+						<th scope="col">Tema</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="game : ${games}">
+						<td>
+							<p th:text="${game.name}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.scheduledDate}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.scheduledTime}"></p>
+						</td>
+
+
+						<td>
+							<p th:text="${game.nGroups}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.nSprints}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.adminPassword}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.userPassword}"></p>
+						</td>
+
+						<td>
+							<p th:text="${game.guestPassword}"></p>
+						</td>
+
+						<td><a th:href="@{/games/edit/{id}(id=${game.id})}"
+							class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+
+						<td><a th:href="@{/games/del/{id}(id=${game.id})}"
+							class="btn btn-primary"><i class="fas fa-trash"></i></a></td>
+
+
+
+						<td>
+						<a
+							th:href="@{/stories/byGame/{id}(id=${game.id})}"
+							class="btn btn-primary"><i class="far fa-sticky-note"></i></a>
+						</td>
+
+
+
+						<td><a sec:authorize="hasRole('SA')" th:if="${game.tsscTopic != null}"
+							th:href="@{/topics/edit/{id}(id=${game.tsscTopic.id})}"
+							class="btn btn-primary"><i class="fas fa-align-justify"></i></a></td>
+					</tr>
+
+
+				</tbody>
+			</table>
+
+
+		</div>
+		<table class="table">
+
+			<tbody>
+				<tr>
+					<td><a href="/games/add" class="btn btn-primary fixed"><i
+							class="fas fa-user-plus ml-2"></i> Add</a></td>
+
+					<td><a href="/" class="btn btn-primary fixed"><i
+							class="fas fa-home ml-2"></i> Home</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/9c90515ed3.js"
+		crossorigin="anonymous"></script>
+</body>
+</html>
