@@ -133,7 +133,7 @@ game.setNGroups(0);
 		new_g.addTsscSprint(new TsscSprint());
 		new_g.setId(mockID);
 		gameService.updateGame(new_g);
-		verify(gameDao).save(new_g);
+		verify(gameDao).update(new_g);
 	}
 	
 	
@@ -192,7 +192,7 @@ game.setNGroups(0);
 		when(this.topicService.getTopic(topicId)).thenReturn(mockTopic);
 		when(this.gameDao.findById(gameID)).thenReturn(mockGame);
 		gameService.updateGame(mockGame,topicId);
-		verify(this.gameDao).save(mockGame);
+		verify(this.gameDao).update(mockGame);
 		verify(this.topicService).getTopic(topicId);
 
 		

@@ -89,7 +89,7 @@ public class TsscTopicServiceTests {
 		mockTopic.setDefaultGroups(4);
 		mockTopic.setDefaultSprints(4);
 		service.updateTopic(mockTopic);
-		verify(dao).save(mockTopic);
+		verify(dao).update(mockTopic);
 	}
 	
 	@Test

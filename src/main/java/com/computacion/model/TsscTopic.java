@@ -55,6 +55,7 @@ public class TsscTopic implements Serializable {
 	
 	@OneToMany(mappedBy = "tsscTopic")
 	@LazyCollection(value = LazyCollectionOption.FALSE)
+	@JsonIgnore
 	private List<TsscTimecontrol> tsscTimeControls;
 
 	public TsscTopic() {

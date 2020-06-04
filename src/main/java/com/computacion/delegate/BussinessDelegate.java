@@ -131,10 +131,16 @@ public class BussinessDelegate {
 	}
 	
 	public void addTimecontrol(TsscTimecontrol timecontrol) {
-		wc.post()
-        .uri(url+"/api/timecontrols/add/")
-        .accept(MediaType.APPLICATION_JSON).bodyValue(timecontrol)
-        .retrieve().bodyToMono(TsscTimecontrol.class).block();
+		try {
+			wc.post()
+	        .uri(url+"/api/timecontrols/add/")
+	        .accept(MediaType.APPLICATION_JSON).bodyValue(timecontrol)
+	        .retrieve().bodyToMono(TsscTimecontrol.class).block();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 	}
 	
 	//Stories

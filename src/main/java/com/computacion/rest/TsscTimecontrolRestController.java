@@ -48,6 +48,9 @@ public class TsscTimecontrolRestController {
 	
 	@PostMapping("api/timecontrols/add")
 	public TsscTimecontrol AddTimecontrol(@RequestBody TsscTimecontrol timecontrol) throws TsscTopicNotFoundException, TsscGameNotFoundException {
+		System.out.println(timecontrol);
+		System.out.println(timecontrol.getTsscGame());
+		System.out.println(timecontrol.getTsscTopic());
 			return this.timecontrolService.createTimecontrol(timecontrol, timecontrol.getTsscGame().getId(),timecontrol.getTsscTopic().getId());
 			
 	}

@@ -2,6 +2,9 @@ package com.computacion.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;

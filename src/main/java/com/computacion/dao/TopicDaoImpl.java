@@ -61,7 +61,9 @@ public class TopicDaoImpl implements TopicDao {
 
 	@Override
 	public List<Object[]> listTopicWithGamesCountByDate(LocalDate date) {
-		String jpql = "select b.tsscTopic , count(b.tsscTopic) from TsscGame b where b.id in (select a.id from TsscGame a where a.scheduledDate = :date order by a.scheduledTime desc) group by b.tsscTopic";
+		//String jpql = "select b.tsscTopic , count(b.tsscTopic.id) from TsscGame b where b.id in (select a.id from TsscGame a where a.scheduledDate = :date order by a.scheduledTime desc) group by b.tsscTopic";
+		String jpql="select t,count(t) from TsscTopic t join TsscGame g on g.tsscTopic=t where g.scheduledDate = :date group by t,g.scheduledTime order by g.scheduledTime desc";
+		
 		Query query = em.createQuery(jpql);
 		query.setParameter("date", date);
 		return query.getResultList();

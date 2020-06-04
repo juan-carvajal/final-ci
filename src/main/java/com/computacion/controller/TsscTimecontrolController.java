@@ -91,6 +91,7 @@ public class TsscTimecontrolController {
 			Model model) throws TsscGameNotFoundException, TsscTopicNotFoundException{
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("games", delegate.getAllGames());
+			model.addAttribute("topics", delegate.getAllTopics());
 			return "/cronogramas/add";
 		} else {
 			delegate.addTimecontrol(timecontrol);
