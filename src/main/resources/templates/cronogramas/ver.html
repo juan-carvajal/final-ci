@@ -33,8 +33,8 @@
 	<div class="text-center">
 		<h1 class="display-2">Simulacion de Scrum - Universidad ICESI</h1>
 		<h1 class="display-4">Gestion de Cronogramas</h1>
-		<h2 th:if="${timecontrols.empty}">No hay cronogramas!</h2>
-		<table th:if="${not timecontrols.empty}" class="table">
+		<h2 th:if="${#lists.isEmpty(timecontrols)}">No hay cronogramas!</h2>
+		<table th:if="${not #lists.isEmpty(timecontrols)}" class="table">
 			<thead>
 				<tr>
 					<th scope="col">Nombre</th>

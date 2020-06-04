@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.computacion.model.TsscGame;
 import com.computacion.model.TsscStory;
 import com.computacion.model.exceptions.TsscGameNotFoundException;
 import com.computacion.model.exceptions.TsscStoryException;
 import com.computacion.model.exceptions.TsscStoryNotFound;
 import com.computacion.model.exceptions.TsscTopicNotFoundException;
 import com.computacion.repository.TsscStoryRepository;
+import com.computacion.service.TsscGameService;
 import com.computacion.service.TsscStoryService;
 
 @RestController
@@ -24,6 +26,9 @@ public class TsscStoryRestController {
 	public TsscStoryRepository storyRepo;
 	@Autowired
 	public TsscStoryService storyService;
+	
+	@Autowired
+	public TsscGameService gameService;
 	
 	@GetMapping("api/stories")
 	public Iterable<TsscStory> getAllStories(){
@@ -56,6 +61,12 @@ public class TsscStoryRestController {
 	@DeleteMapping("api/stories/del")
 	public void DeleteStory(@PathVariable long id) {
 		this.storyRepo.deleteById(id);
+	}
+	
+	@GetMapping("api/game/{id}/stories")
+	public Iterable<TsscStory> getStoriesByGame(@PathVariable long id) throws TsscGameNotFoundException{
+		TsscGame game=this.gameService.getGame(id);
+		return this.storyRepo.findAllByTsscGame(game);
 	}
 
 }

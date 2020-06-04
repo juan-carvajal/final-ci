@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.computacion.delegate.BussinessDelegate;
 import com.computacion.model.TsscGame;
 import com.computacion.model.TsscStory;
 import com.computacion.model.exceptions.TsscGameException;
@@ -26,25 +27,17 @@ import com.computacion.service.TsscStoryService;
 @Controller
 public class TsscStoryController {
 	
-
-	@Autowired
-	public TsscStoryRepository storyRepo;
-
-	@Autowired
-	public TsscStoryService storyService;
-
-	@Autowired
-	public TsscGameService gameService;
 	
 	@Autowired
-	public TsscGameRepository gameRepo;
+	public BussinessDelegate delegate;
+	
 	
 
 	
 	@GetMapping("/stories/byGame/{id}")
 	public String getStoriesByGame(@PathVariable long id,Model model) throws TsscGameNotFoundException {
 		try {
-			model.addAttribute("stories", storyRepo.findAllByTsscGame(gameService.getGame(id)));
+			model.addAttribute("stories", delegate.getStoriesByGame(id));
 			model.addAttribute("gameID", id);
 			return "historias/verPorGame";
 		} catch (Exception e) {
@@ -56,21 +49,21 @@ public class TsscStoryController {
 
 	@GetMapping("/stories")
 	public String viewStories(Model model) {
-		model.addAttribute("stories", storyRepo.findAll());
+		model.addAttribute("stories", delegate.getAllStories());
 		return "historias/ver";
 	}
 
 	@GetMapping("/stories/add")
 	public String addStory(Model model) {
 		model.addAttribute("story", new TsscStory());
-		model.addAttribute("games", gameRepo.findAll());
+		model.addAttribute("games", delegate.getAllGames());
 		return "historias/add";
 	}
 
 	@GetMapping("/stories/del/{id}")
 	public String deleteStory(@PathVariable long id) {
 		try {
-			this.storyRepo.deleteById(id);
+			delegate.deleteStory(id);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -86,10 +79,10 @@ public class TsscStoryController {
 		try {
 			if (bindingResult.hasErrors()) {
 				//model.addAttribute("game", this.gameService.getGame(id));
-				model.addAttribute("games", gameRepo.findAll());
+				model.addAttribute("games", delegate.getAllGames());
 				return "historias/edit";
 			}else {
-				this.storyService.updateStory(story, story.getTsscGame().getId());
+				delegate.editStory(story);
 			}
 
 
@@ -102,9 +95,9 @@ public class TsscStoryController {
 	@GetMapping("/stories/edit/{id}")
 	public String editStory(@PathVariable long id, Model model) {
 		try {
-			TsscStory story = storyService.getStory(id);
+			TsscStory story = delegate.getStory(id);
 			model.addAttribute("story", story);
-			model.addAttribute("games", gameRepo.findAll());
+			model.addAttribute("games", delegate.getAllGames());
 			return "/historias/edit";
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -116,10 +109,10 @@ public class TsscStoryController {
 	public String addStoryPost(@Validated @ModelAttribute("story") TsscStory story, BindingResult bindingResult,
 			Model model) throws TsscStoryException, TsscGameNotFoundException, TsscStoryNotFound{
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("games", gameRepo.findAll());
+			model.addAttribute("games", delegate.getAllGames());
 			return "/historias/add";
 		} else {
-			this.storyService.createStory(story, story.getTsscGame().getId());
+			delegate.addStory(story);
 
 		}
 
