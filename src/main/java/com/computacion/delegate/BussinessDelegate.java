@@ -59,8 +59,7 @@ public class BussinessDelegate {
         .retrieve().bodyToMono(TsscGame.class).block();
 	}
 	
-	
-	
+
 	
 	
 	//Topics
@@ -179,14 +178,14 @@ public Iterable<TsscStory> getAllStories(){
 	public void addStoryWithGame(TsscStory story,long id) {
 																																															story.setId(0);
 		wc.post()
-        .uri("api/games/{id}/stories/add",id)
+        .uri(url+"api/games/{id}/stories/add",id)
         .accept(MediaType.APPLICATION_JSON).bodyValue(story)
         .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
 	public Iterable<TsscStory> getStoriesByGame(long id){
 		return wc.get()
-		        .uri("api/game/{id}/stories",id)
+		        .uri(url+"api/game/{id}/stories",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscStory.class).toIterable();
 	}
@@ -198,7 +197,7 @@ public Iterable<TsscStory> getAllStories(){
 	
 	public Iterable<TsscTopic> getTopicsByDate(LocalDate date){
 		 return wc.get()
-	        .uri("api/topics/byDate/{date}",date)
+	        .uri(url+"api/topics/byDate/{date}",date)
 	        .accept(MediaType.APPLICATION_JSON)
 	        .retrieve().bodyToFlux(TsscTopic.class).toIterable();
 	}
@@ -206,7 +205,7 @@ public Iterable<TsscStory> getAllStories(){
 	
 	public Iterable<TsscGame> gamesExtraQuery(LocalDate date){
 		 return wc.get()
-	        .uri("api/games/byDate/{date}",date)
+	        .uri(url+"api/games/byDate/{date}",date)
 	        .accept(MediaType.APPLICATION_JSON)
 	        .retrieve().bodyToFlux(TsscGame.class).toIterable();
 	}
