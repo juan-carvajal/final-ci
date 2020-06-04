@@ -1,8 +1,11 @@
 package com.computacion.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +56,15 @@ public class TsscGameController {
 			e.printStackTrace();
 		}
 		return "redirect:/games";
+	}
+	
+	
+	
+	@GetMapping("/games/byDate/{date}")
+	public String gameDate(@PathVariable @DateTimeFormat(iso=ISO.DATE) LocalDate date, Model model) {
+		model.addAttribute("games",this.delegate.gamesExtraQuery(date));
+		model.addAttribute("date", date);
+		return "juegos/verFecha";
 	}
 	
 	

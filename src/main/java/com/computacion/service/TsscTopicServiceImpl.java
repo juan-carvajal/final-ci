@@ -47,7 +47,7 @@ public class TsscTopicServiceImpl implements TsscTopicService {
 			throw new TsscTopicNotFoundException(topic.getId());
 		}else {
 			if(topic != null && topic.getDefaultGroups()>0 && topic.getDefaultSprints()>0) {
-				return this.topicDao.save(topic);
+				return this.topicDao.update(topic);
 			}else {
 				throw new TsscTopicException(topic);
 			}

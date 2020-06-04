@@ -92,6 +92,18 @@
 
 			</tbody>
 		</table>
+		
+		<hr>
+		<div class="container text-center">
+			<h2>Consulta Extra</h2>
+
+			<input id="date-input" type="date">
+			<button onClick="enviar()">Consultar</button>
+			
+			
+			
+
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -107,5 +119,25 @@
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/9c90515ed3.js"
 		crossorigin="anonymous"></script>
+		
+		
+	<script>
+	
+	function calculate(){
+		date=document.getElementById("date-input").value
+		var newWin='/topics/byDate/'+date;
+		return newWin
+	}
+	
+	function enviar(){
+		win=calculate()
+		window.location=win
+		//history.pushState(null,null , win)
+
+	}
+	
+	
+	
+	</script>
 </body>
 </html>

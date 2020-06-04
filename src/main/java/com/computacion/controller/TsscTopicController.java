@@ -1,6 +1,10 @@
 package com.computacion.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +56,16 @@ public class TsscTopicController {
 			// TODO: handle exception
 		}
 		return "redirect:/topics";
+	}
+	
+	
+	@GetMapping("/topics/byDate/{date}")
+	public String topicDate(@PathVariable @DateTimeFormat(iso=ISO.DATE) LocalDate date, Model model) {
+		var res=this.delegate.getTopicsByDate(date);
+		System.out.println(res);
+		model.addAttribute("topics",res);
+		model.addAttribute("date", date);
+		return "temas/verFecha";
 	}
 	
 	
