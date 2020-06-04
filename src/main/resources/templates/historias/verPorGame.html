@@ -71,7 +71,7 @@
 						<p th:text="${story.priority}"></p>
 					</td>
 
-					<td><a th:href="@{/stories/edit/{id}(id=${story.id})}"
+					<td><a th:href="@{/stories/editConGame/{id}(id=${story.id})}"
 						class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
 
 					<td><a th:href="@{/stories/del/{id}(id=${story.id})}"
@@ -91,7 +91,7 @@
 
 			<tbody>
 				<tr>
-					<td><a href="/stories/add" class="btn btn-primary fixed"><i
+					<td><a th:href="@{/games/{ggg}/stories/add (ggg=${gameID})}" class="btn btn-primary fixed"><i
 							class="fas fa-user-plus ml-2"></i> Add</a></td>
 
 					<td><a href="/" class="btn btn-primary fixed"><i

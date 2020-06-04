@@ -59,6 +59,7 @@ public class TsscStoryController {
 		model.addAttribute("games", delegate.getAllGames());
 		return "historias/add";
 	}
+	
 
 	@GetMapping("/stories/del/{id}")
 	public String deleteStory(@PathVariable long id) {
@@ -104,6 +105,19 @@ public class TsscStoryController {
 			return "redirect:/historias";
 		}
 	}
+	
+	@GetMapping("/stories/editConGame/{id}")
+	public String editStoryConGame(@PathVariable long id, Model model) {
+		try {
+			TsscStory story = delegate.getStory(id);
+			model.addAttribute("story", story);
+			model.addAttribute("games", delegate.getAllGames());
+			return "/historias/editConGame";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "redirect:/historias";
+		}
+	}
 
 	@PostMapping("/stories/add")
 	public String addStoryPost(@Validated @ModelAttribute("story") TsscStory story, BindingResult bindingResult,
@@ -117,6 +131,28 @@ public class TsscStoryController {
 		}
 
 		return "redirect:/stories";
+	}
+	
+	@PostMapping("/games/{id}/stories/add")
+	public String addStoryConGamePost(@Validated @ModelAttribute("story") TsscStory story, BindingResult bindingResult,
+			Model model,@PathVariable long id) throws TsscStoryException, TsscGameNotFoundException, TsscStoryNotFound{
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("game", delegate.getGame(id));
+			return "/historias/addConGame";
+		} else {
+			System.out.println(story.getId()+"post");
+			delegate.addStoryWithGame(story,id);
+		}
+		return "redirect:/stories/byGame/"+id;
+	}
+	
+	@GetMapping("/games/{id}/stories/add")
+	public String addStoryWithGame(Model model, @PathVariable long id) {
+		TsscStory story=new TsscStory();
+		System.out.println(story.getId());
+		model.addAttribute("story", story);
+		model.addAttribute("game", delegate.getGame(id));
+		return "historias/addConGame";
 	}
 
 }

@@ -167,11 +167,20 @@ public Iterable<TsscStory> getAllStories(){
         .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
+	public void addStoryWithGame(TsscStory story,long id) {
+																																															story.setId(0);
+		WebClient.create("http://localhost:8080").post()
+        .uri("api/games/{id}/stories/add",id)
+        .accept(MediaType.APPLICATION_JSON).bodyValue(story)
+        .retrieve().bodyToMono(TsscStory.class).block();
+	}
+	
 	public Iterable<TsscStory> getStoriesByGame(long id){
 		return WebClient.create("http://localhost:8080").get()
 		        .uri("api/game/{id}/stories",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscStory.class).toIterable();
 	}
+
 
 }

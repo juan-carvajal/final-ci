@@ -58,6 +58,15 @@ public class TsscStoryRestController {
 			
 	}
 	
+	@PostMapping("api/games/{id}/stories/add")
+	public TsscStory AddStoryWithGame(@RequestBody TsscStory story) throws TsscTopicNotFoundException, TsscStoryException, TsscGameNotFoundException {
+		
+		System.out.println(story.getId()+" game:"+story.getTsscGame().getId());
+		
+			return this.storyService.createStory(story, story.getTsscGame().getId());
+			
+	}
+	
 	@DeleteMapping("api/stories/del")
 	public void DeleteStory(@PathVariable long id) {
 		this.storyRepo.deleteById(id);

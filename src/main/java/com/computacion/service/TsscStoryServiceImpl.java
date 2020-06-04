@@ -73,7 +73,7 @@ public class TsscStoryServiceImpl implements TsscStoryService {
 				TsscStory story1 = this.getStory(story.getId());
 				TsscGame game = this.gameService.getGame(gameID);
 				story.setTsscGame(game);
-				return this.storyDao.save(story);
+				return this.storyDao.update(story);
 			} else {
 				throw new TsscStoryException(story);
 			}
