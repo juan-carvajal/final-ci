@@ -1,5 +1,6 @@
 package com.computacion.delegate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,41 +12,47 @@ import com.computacion.model.TsscTopic;
 
 @Component
 public class BussinessDelegate {
-	
 	//Games
 	
+	public String url="http://localhost:8080";
+	public WebClient wc;
+	
+	public BussinessDelegate() {
+		wc=WebClient.create();
+	}
+	
+	
 	public Iterable<TsscGame> getAllGames(){
-		
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/games")
+		return wc.get()
+		        .uri(url+"/api/games")
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscGame.class).toIterable();
 	}
 	
 	public void deleteGame(long id) {
-		WebClient.create("http://localhost:8080").delete()
-        .uri("/api/games/del/{id}",id)
+		wc.delete()
+        .uri(url+"/api/games/del/{id}",id)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve().bodyToMono(Void.class).block();
 	}
 	
 	public void editGame(TsscGame game) {
-		WebClient.create("http://localhost:8080").patch()
-        .uri("/api/games/edit/")
+		wc.patch()
+        .uri(url+"/api/games/edit/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(game)
         .retrieve().bodyToMono(TsscGame.class).block();
 	}
 	
 	public TsscGame getGame(long id) {
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/games/{id}",id)
+		return wc.get()
+		        .uri(url+"/api/games/{id}",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToMono(TsscGame.class).block();
 	}
 	
 	public void addGame(TsscGame game) {
-		WebClient.create("http://localhost:8080").post()
-        .uri("/api/games/add/")
+		wc.post()
+        .uri(url+"/api/games/add/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(game)
         .retrieve().bodyToMono(TsscGame.class).block();
 	}
@@ -58,36 +65,36 @@ public class BussinessDelegate {
 	
 	public Iterable<TsscTopic> getAllTopics(){
 		
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/topics")
+		return wc.get()
+		        .uri(url+"/api/topics")
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscTopic.class).toIterable();
 	}
 	
 	public void deleteTopic(long id) {
-		WebClient.create("http://localhost:8080").delete()
-        .uri("/api/topics/del/{id}",id)
+		wc.delete()
+        .uri(url+"/api/topics/del/{id}",id)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve().bodyToMono(Void.class).block();
 	}
 	
 	public void editTopic(TsscTopic topic) {
-		WebClient.create("http://localhost:8080").patch()
-        .uri("/api/topics/edit/")
+		wc.patch()
+        .uri(url+"/api/topics/edit/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(topic)
         .retrieve().bodyToMono(TsscTopic.class).block();
 	}
 	
 	public TsscTopic getTopic(long id) {
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/topics/{id}",id)
+		return wc.get()
+		        .uri(url+"/api/topics/{id}",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToMono(TsscTopic.class).block();
 	}
 	
 	public void addTopic(TsscTopic topic) {
-		WebClient.create("http://localhost:8080").post()
-        .uri("/api/topics/add/")
+		wc.post()
+        .uri(url+"/api/topics/add/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(topic)
         .retrieve().bodyToMono(TsscTopic.class).block();
 	}
@@ -95,36 +102,36 @@ public class BussinessDelegate {
 	
 	public Iterable<TsscTimecontrol> getAllTimecontrols(){
 		
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/timecontrols")
+		return wc.get()
+		        .uri(url+"/api/timecontrols")
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscTimecontrol.class).toIterable();
 	}
 	
 	public void deleteTimecontrol(long id) {
-		WebClient.create("http://localhost:8080").delete()
-        .uri("/api/timecontrols/del/{id}",id)
+		wc.delete()
+        .uri(url+"/api/timecontrols/del/{id}",id)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve().bodyToMono(Void.class).block();
 	}
 	
 	public void editTimecontrol(TsscTimecontrol timecontrol) {
-		WebClient.create("http://localhost:8080").patch()
-        .uri("/api/timecontrols/edit/")
+		wc.patch()
+        .uri(url+"/api/timecontrols/edit/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(timecontrol)
         .retrieve().bodyToMono(TsscTimecontrol.class).block();
 	}
 	
 	public TsscTimecontrol getTimecontrol(long id) {
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/timecontrols/{id}",id)
+		return wc.get()
+		        .uri(url+"/api/timecontrols/{id}",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToMono(TsscTimecontrol.class).block();
 	}
 	
 	public void addTimecontrol(TsscTimecontrol timecontrol) {
-		WebClient.create("http://localhost:8080").post()
-        .uri("/api/timecontrols/add/")
+		wc.post()
+        .uri(url+"/api/timecontrols/add/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(timecontrol)
         .retrieve().bodyToMono(TsscTimecontrol.class).block();
 	}
@@ -133,53 +140,57 @@ public class BussinessDelegate {
 	
 public Iterable<TsscStory> getAllStories(){
 		
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/stories")
+		return wc.get()
+		        .uri(url+"/api/stories")
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscStory.class).toIterable();
 	}
 	
 	public void deleteStory(long id) {
-		WebClient.create("http://localhost:8080").delete()
-        .uri("/api/stories/del/{id}",id)
+		wc.delete()
+        .uri(url+"/api/stories/del/{id}",id)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve().bodyToMono(Void.class).block();
 	}
 	
 	public void editStory(TsscStory story) {
-		WebClient.create("http://localhost:8080").patch()
-        .uri("/api/stories/edit/")
+		wc.patch()
+        .uri(url+"/api/stories/edit/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(story)
         .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
 	public TsscStory getStory(long id) {
-		return WebClient.create("http://localhost:8080").get()
-		        .uri("/api/stories/{id}",id)
+		return wc.get()
+		        .uri(url+"/api/stories/{id}",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
 	public void addStory(TsscStory story) {
-		WebClient.create("http://localhost:8080").post()
-        .uri("/api/stories/add/")
+		wc.post()
+        .uri(url+"/api/stories/add/")
         .accept(MediaType.APPLICATION_JSON).bodyValue(story)
         .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
 	public void addStoryWithGame(TsscStory story,long id) {
 																																															story.setId(0);
-		WebClient.create("http://localhost:8080").post()
+		wc.post()
         .uri("api/games/{id}/stories/add",id)
         .accept(MediaType.APPLICATION_JSON).bodyValue(story)
         .retrieve().bodyToMono(TsscStory.class).block();
 	}
 	
 	public Iterable<TsscStory> getStoriesByGame(long id){
-		return WebClient.create("http://localhost:8080").get()
+		return wc.get()
 		        .uri("api/game/{id}/stories",id)
 		        .accept(MediaType.APPLICATION_JSON)
 		        .retrieve().bodyToFlux(TsscStory.class).toIterable();
+	}
+	
+	public void setUrl(String url) {
+		this.url=url;
 	}
 
 
